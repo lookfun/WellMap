@@ -51,6 +51,7 @@
         map.addControl(ctrl_nav);
         //向地图中添加缩略图控件
         var ctrl_ove = new BMap.OverviewMapControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: 1 });
+        ctrl_ove.changeView();
         map.addControl(ctrl_ove);
         //向地图中添加比例尺控件
         var ctrl_sca = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT });
@@ -75,17 +76,19 @@
         wdarr.push("<%=wd[i]%>");
         wellnamearr.push("<%=wellname[i]%>");
       <%   }%>
+        var points=new Array();
         for( var i=0;i<len;i++) 
         {
         var point=new BMap.Point(jdarr[i],wdarr[i]);
-
+        points.push(point);
         var iconimg=createIcon({ w: 21, h: 21, l: 0, t: 0, x: 6, lb: 5});
         var marker= new BMap.Marker(point,{icon:iconimg}); 
-        map.setViewport(jdarr[i],wdarr[i]);   //调整地图的最佳视野为显示标注数组 
+ //       map.setViewport(jdarr[i],wdarr[i]);   //调整地图的最佳视野为显示标注数组 
         var mylabel=new BMap.Label(wellnamearr[i],{offset:new BMap.Size(9,-20)});
         marker.setLabel(mylabel); 
         map.addOverlay(marker);
         } 
+        map.setViewport(points);
         /*   for (var i = 0; i < markerArr.length; i++)
         {
         var json = markerArr[i];
